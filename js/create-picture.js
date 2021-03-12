@@ -1,3 +1,6 @@
+import { clearComments, generateModalContent } from './big-picture-modal.js';
+import { getData } from './store.js';
+
 /* eslint-disable no-unused-vars */
 const body = document.querySelector('body');
 const picturesContainer =  document.querySelector('.pictures');
@@ -9,6 +12,7 @@ const openPictureModal = () => {
   body.classList.add('modal-open');
   pictureModal.classList.remove('hidden');
 }
+
 const closePictureModal = () => {
   body.classList.remove('modal-open');
   pictureModal.classList.add('hidden');
@@ -19,6 +23,7 @@ const createPictureElement = (data) => {
 
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const pictureCard = pictureTemplate.cloneNode(true);
+  pictureCard.setAttribute('id', id)
   pictureCard.querySelector('.picture__img').src = url;
   pictureCard.querySelector('.picture__comments').textContent = comments.length;
   pictureCard.querySelector('.picture__likes').textContent = likes;
@@ -26,9 +31,12 @@ const createPictureElement = (data) => {
   return pictureCard;
 }
 
-
 const onPictureClick = (evt) => {
   evt.preventDefault();
+  const id =  evt.currentTarget.getAttribute('id')
+  const data = getData();
+  clearComments();
+  generateModalContent(id, data)
   openPictureModal()
 }
 
