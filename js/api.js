@@ -11,4 +11,18 @@ const getData = (onSucces, onFil) => {
     .catch(() => onFil)
 }
 
-export {getData}
+const sendData = (onSucces, onFail, data) => {
+  fetch (API_URL, {
+    method: 'POST',
+    body: data,
+  })
+    .then ((response) => {
+      if (response.ok) {
+        onSucces()
+      } else {throw new Error ()}
+    })
+    .catch (()=> {
+      onFail()
+    })
+}
+export {getData, sendData}

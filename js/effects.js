@@ -29,8 +29,13 @@ const onScaleClick = (evt) => {
     }
   }
 
-  scaleValue.value = `${currentScaleValue}%`;
+  scaleValue.setAttribute('value', `${currentScaleValue}%`)
   setScaleStyle(currentScaleValue, photoPreview)
+}
+
+const resetScale = () => {
+  scaleValue.setAttribute('value', `${SCALE_MAX_VALUE}%`)
+  setScaleStyle(SCALE_MAX_VALUE, photoPreview)
 }
 
 scale.addEventListener('click', onScaleClick)
@@ -48,7 +53,7 @@ const addEffectClass = (elem, noModiffyClass, value) => {
 
 const onEffectsListChange = (evt) => {
   if (evt.target.value === 'none') {
-    photoPreview.removeAttribute('style')
+    photoPreview.style.filter = 'none'
   }
   setEffectValue()
   addEffectClass(photoPreview, 'effects__preview', evt.target.value);
@@ -60,4 +65,4 @@ const checkedRadioButton = findCheckedEffect();
 changeSliderProperties(checkedRadioButton.value)
 
 
-export {photoPreview, onEffectsListChange, findCheckedEffect, effectValue}
+export {photoPreview, onEffectsListChange, findCheckedEffect, effectValue, resetScale}
