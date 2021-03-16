@@ -1,5 +1,6 @@
 import { sendData } from './api.js';
 import {onEffectsListChange,effectValue, findCheckedEffect, resetScale} from './effects.js'
+import { showInfoMessage } from './message.js';
 import {onSliderChange, onSliderUpdate, slider} from './slider.js'
 import './validation.js'
 
@@ -30,6 +31,7 @@ const closeUploadPhoto = () => {
 
 const setEffectValue = () => {
   const checkedEffect = findCheckedEffect();
+
   if (checkedEffect.value === 'none') {
     effectValue.setAttribute('value', '0');
 
@@ -39,12 +41,14 @@ const setEffectValue = () => {
 }
 
 const sendFormSuccess = () => {
-  resetScale()
+  resetScale();
+  closeUploadPhoto()
+  showInfoMessage();
 }
 
 const sendFormError = () => {
-  // eslint-disable-next-line no-console
-  console.log('error');
+  closeUploadPhoto()
+  showInfoMessage('err');
 }
 
 const onFormSubmit = (evt) => {
@@ -54,7 +58,6 @@ const onFormSubmit = (evt) => {
 }
 
 setEffectValue();
-openUploadPhoto();
 
 uploadFormInput.addEventListener('change',onUploadFormInput);
 buttonResetClose.addEventListener('click', closeUploadPhoto);

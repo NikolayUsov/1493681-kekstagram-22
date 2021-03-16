@@ -36,6 +36,7 @@ const updateHashTags = (arr) => {
 const validateHashtags = (arr, evt) => {
   for (let i = 0; i < arr.length; i++) {
     let elem = arr[i];
+
     if (arr.indexOf(elem) !== arr.lastIndexOf(elem)) {
       evt.target.setCustomValidity('Неуникальные хештеги');
       return false
@@ -57,9 +58,10 @@ const onHashtagInputChange = (evt) => {
 
   if (hashTags.length > MAX_HASHTAGS) {
     evt.target.setCustomValidity(`Много хэштэгов, удалите ${hashTags.length - MAX_HASHTAGS}`);
+    evt.target.reportValidity()
+    return
   }
   validateHashtags(hashTags, evt)
-
   evt.target.reportValidity()
 }
 

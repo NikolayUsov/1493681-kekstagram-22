@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { clearComments, generateModalContent } from './big-picture-modal.js';
+import { activateFilter } from './filter.js';
 import { getData } from './store.js';
 
 /* eslint-disable no-unused-vars */
