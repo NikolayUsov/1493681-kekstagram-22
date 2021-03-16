@@ -42,8 +42,8 @@ const onPictureClick = (evt) => {
   openPictureModal()
 }
 
-const renderPicture = (data) => {
-  for (let i = 0; i <= data.length; i++) {
+const renderPictures = (data) => {
+  for (let i = 0; i < data.length; i++) {
     const picture = data[i];
     const pictureElement = createPictureElement(picture);
     pictureElement.addEventListener('click', onPictureClick)
@@ -51,8 +51,19 @@ const renderPicture = (data) => {
   }
 }
 
+const clearPicturesContainer = () => {
+  const userPictures = picturesContainer.querySelectorAll('.picture');
+  if (userPictures.length === 0) {
+    return
+  } else {
+    for (let i = 0; i < userPictures.length; i++) {
+      userPictures[i].remove()
+    }
+  }
+}
+
 btnClosePictureModal.addEventListener('click', () => {
   closePictureModal();
 })
 
-export {renderPicture}
+export {renderPictures, clearPicturesContainer}
