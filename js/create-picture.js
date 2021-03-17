@@ -35,7 +35,7 @@ const createPictureElement = (data) => {
 
 const onPictureClick = (evt) => {
   evt.preventDefault();
-  const id =  evt.currentTarget.getAttribute('id')
+  const id = evt.currentTarget.getAttribute('id')
   const data = getData();
   clearComments();
   generateModalContent(id, data)
