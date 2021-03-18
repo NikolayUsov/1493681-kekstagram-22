@@ -12,7 +12,6 @@
 
 <body>
   <main>
-
     <!-- Фильтрация изображений от других пользователей -->
     <section class="img-filters  img-filters--inactive  container">
       <h2 class="img-filters__title  visually-hidden">Фильтр фотографий</h2>
@@ -133,7 +132,24 @@
     </section>
 
     <!-- Полноэкранный показ изображения -->
-    <section class="big-picture  overlay  hidden">
+  </main>
+
+  <footer class="page-footer  container">
+    <div class="page-footer__wrapper">
+      <div class="page-footer__copyright  copyright">
+        <a class="copyright__link  copyright__link--image" href="https://htmlacademy.ru/intensive/javascript"><img src="img/htmla-logo.svg" width="130" height="45" alt="HTML Academy"></a>
+        <p>Сделано в <a class="copyright__link  copyright__link--text" href="https://htmlacademy.ru/intensive/javascript">HTML Academy</a></p>
+      </div>
+      <ul class="page-footer__contacts  contacts">
+        <li><a href="https://twitter.com/htmlacademy_ru" class="contacts__link  contacts__link--twitter">Twitter</a></li>
+        <li><a href="https://www.instagram.com/htmlacademy/" class="contacts__link  contacts__link--instagram">Instagtam</a></li>
+        <li><a href="https://www.facebook.com/htmlacademy" class="contacts__link  contacts__link--facebook">Facebook</a></li>
+        <li><a href="https://vk.com/htmlacademy" class="contacts__link  contacts__link--vk">VK</a></li>
+      </ul>
+    </div>
+  </footer>
+  <template id="big-picture">
+    <section class="big-picture  overlay">
       <h2 class="big-picture__title  visually-hidden">Просмотр фотографии</h2>
       <div class="big-picture__preview">
 
@@ -151,7 +167,7 @@
           </div>
 
           <!-- Комментарии к изображению -->
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count"><span class="social_current-comment">5</span> из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
             <li class="social__comment">
               <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
@@ -178,22 +194,7 @@
         <button type="reset" class="big-picture__cancel  cancel" id="picture-cancel">Закрыть</button>
       </div>
     </section>
-  </main>
-
-  <footer class="page-footer  container">
-    <div class="page-footer__wrapper">
-      <div class="page-footer__copyright  copyright">
-        <a class="copyright__link  copyright__link--image" href="https://htmlacademy.ru/intensive/javascript"><img src="img/htmla-logo.svg" width="130" height="45" alt="HTML Academy"></a>
-        <p>Сделано в <a class="copyright__link  copyright__link--text" href="https://htmlacademy.ru/intensive/javascript">HTML Academy</a></p>
-      </div>
-      <ul class="page-footer__contacts  contacts">
-        <li><a href="https://twitter.com/htmlacademy_ru" class="contacts__link  contacts__link--twitter">Twitter</a></li>
-        <li><a href="https://www.instagram.com/htmlacademy/" class="contacts__link  contacts__link--instagram">Instagtam</a></li>
-        <li><a href="https://www.facebook.com/htmlacademy" class="contacts__link  contacts__link--facebook">Facebook</a></li>
-        <li><a href="https://vk.com/htmlacademy" class="contacts__link  contacts__link--vk">VK</a></li>
-      </ul>
-    </div>
-  </footer>
+  </template>
 
   <!-- Шаблон изображения случайного пользователя -->
   <template id="picture">

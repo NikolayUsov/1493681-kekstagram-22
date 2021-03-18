@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { clearComments, generateModalContent } from './big-picture-modal.js';
+import { generateModalContent } from './big-picture-modal.js';
 import { activateFilter } from './filter.js';
 import { getData } from './store.js';
 
@@ -12,12 +12,6 @@ const MAX_PICTURE = 12;
 
 const openPictureModal = () => {
   body.classList.add('modal-open');
-  pictureModal.classList.remove('hidden');
-}
-
-const closePictureModal = () => {
-  body.classList.remove('modal-open');
-  pictureModal.classList.add('hidden');
 }
 
 const createPictureElement = (data) => {
@@ -37,8 +31,7 @@ const onPictureClick = (evt) => {
   evt.preventDefault();
   const id = evt.currentTarget.getAttribute('id')
   const data = getData();
-  clearComments();
-  generateModalContent(id, data)
+  body.appendChild(generateModalContent(id, data))
   openPictureModal()
 }
 
@@ -62,8 +55,6 @@ const clearPicturesContainer = () => {
   }
 }
 
-btnClosePictureModal.addEventListener('click', () => {
-  closePictureModal();
-})
+
 
 export {renderPictures, clearPicturesContainer}

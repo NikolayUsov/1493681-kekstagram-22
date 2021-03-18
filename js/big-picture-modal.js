@@ -1,14 +1,19 @@
 /* eslint-disable no-unused-vars */
+const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+const body = document.querySelector('body');
+const STAR_SHOW_COMMENTS = 5;
+const bigPictureTemplate = document.querySelector('#big-picture').content.querySelector('.big-picture');
+const pictureModal = bigPictureTemplate.cloneNode(true);
 
-const pictureModal = document.querySelector('.big-picture');
-const btnClosePictureModal = document.querySelector('.big-picture__cancel');
 const bigPicture = pictureModal.querySelector('.big-picture__img').querySelector('img');
-const likesCount = pictureModal.querySelector('.likes-count');
 const commentsCount = pictureModal.querySelector('.comments-count');
 const commentsContainer = pictureModal.querySelector('.social__comments');
-const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 const modalDescription = pictureModal.querySelector('.social__caption');
-
+const btnClosePictureModal = pictureModal.querySelector('.big-picture__cancel');
+const commentButtonLoader = pictureModal.querySelector('.social__comments-loader');
+const socialLikes = pictureModal.querySelector('.social__likes');
+const currentComments = document.querySelector('.social_current-comment');
+let likesCount = pictureModal.querySelector('.likes-count');
 
 const generateComment = (commentData) => {
   const {id, avatar, message, name} = commentData;
@@ -21,7 +26,6 @@ const generateComment = (commentData) => {
   comment.style.display = 'none'
   return comment;
 }
-const clearComments = () => commentsContainer.innerHTML = '';
 
 const generateCommentsList = (data) => {
   const commentsList = document.createDocumentFragment();
@@ -32,11 +36,14 @@ const generateCommentsList = (data) => {
   return commentsList
 }
 
+const findCommentCounter = () => {
+  return document.querySelector('.social_current-comment')
+}
 
-const addCommentsViwer = function () {
-  let startComments = 0;
-
-  return function (comments) {
+const addCommentsViwer = function (comments) {
+  let startComments = STAR_SHOW_COMMENTS;
+  let currentComment = findCommentCounter()
+  return function () {
     if (comments.length < 5) {
       startComments = comments.length;
     }
@@ -44,29 +51,53 @@ const addCommentsViwer = function () {
       comments[i].style.display = 'flex';
     }
     startComments+= 5;
+
   }
 
 }
 
-const start = addCommentsViwer();
-
-const onCommentLoad = (data) => {
-  start(data)
-}
-
-
 const generateModalContent = (eventIndex, data) => {
   const indexOfCurrentPicture = data.findIndex(elem => elem.id === +eventIndex)
   const currentPicture = data[indexOfCurrentPicture];
+
   modalDescription.textContent = currentPicture.description
   bigPicture.src = currentPicture.url;
   likesCount.textContent = currentPicture.likes;
-  const commentButtonLoader = document.querySelector('.social__comments-loader');
+  commentsCount.textContent = currentPicture.comments.length;
+  commentsContainer.innerHTML = ''
   commentsContainer.appendChild(generateCommentsList(currentPicture.comments));
   const commentsList = commentsContainer.children;
 
-  commentButtonLoader.removeEventListener('click', () => onCommentLoad(commentsList))
-  commentButtonLoader.addEventListener('click', () => onCommentLoad(commentsList))
+  const showComments = addCommentsViwer(commentsList);
+
+  const onCommentLoad = () => {
+    showComments()
+  }
+
+  const closePictureModal = () => {
+    body.classList.remove('modal-open');
+    pictureModal.remove();
+  }
+
+  const onLikeClick = (evt) => {
+    if (evt.target.classList.contains('likes-count--active')) {
+      likesCount.textContent --
+      evt.target.classList.remove('likes-count--active');
+    } else {
+      likesCount.textContent++
+      evt.target.classList.add('likes-count--active');
+    }
+  }
+
+  socialLikes.addEventListener('click', onLikeClick)
+  commentButtonLoader.addEventListener('click', onCommentLoad);
+
+  btnClosePictureModal.addEventListener('click', () => {
+    closePictureModal();
+  })
+
+  showComments()
+  return pictureModal
 }
 
-export {generateModalContent, clearComments, onCommentLoad}
+export {generateModalContent}
