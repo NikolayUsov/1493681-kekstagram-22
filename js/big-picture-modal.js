@@ -12,7 +12,7 @@ const modalDescription = pictureModal.querySelector('.social__caption');
 const btnClosePictureModal = pictureModal.querySelector('.big-picture__cancel');
 const commentButtonLoader = pictureModal.querySelector('.social__comments-loader');
 const socialLikes = pictureModal.querySelector('.social__likes');
-const currentComments = document.querySelector('.social_current-comment');
+const currentComments = pictureModal.querySelector('.social_current-comment');
 let likesCount = pictureModal.querySelector('.likes-count');
 
 const generateComment = (commentData) => {
@@ -40,20 +40,28 @@ const findCommentCounter = () => {
   return document.querySelector('.social_current-comment')
 }
 
-const addCommentsViwer = function (comments) {
+const addCommentsViwer = function (comments, btn, counter) {
   let startComments = STAR_SHOW_COMMENTS;
-  let currentComment = findCommentCounter()
-  return function () {
-    if (comments.length < 5) {
-      startComments = comments.length;
-    }
-    for (let i = 0; i < startComments; i++) {
-      comments[i].style.display = 'flex';
-    }
-    startComments+= 5;
+  btn.disabled =false
 
+  if (comments.length < STAR_SHOW_COMMENTS) {
+    startComments = comments.length;
+    btn.disabled = true
   }
 
+  return function () {
+    counter.textContent = 0;
+
+    if (comments.length < startComments) {
+      btn.disabled = true
+    }
+
+    for (let i = 0; i < startComments; i++) {
+      comments[i].style.display = 'flex';
+      counter.textContent ++;
+    }
+    startComments+= 5;
+  }
 }
 
 const generateModalContent = (eventIndex, data) => {
@@ -64,11 +72,11 @@ const generateModalContent = (eventIndex, data) => {
   bigPicture.src = currentPicture.url;
   likesCount.textContent = currentPicture.likes;
   commentsCount.textContent = currentPicture.comments.length;
-  commentsContainer.innerHTML = ''
+  commentsContainer.innerHTML = '';
   commentsContainer.appendChild(generateCommentsList(currentPicture.comments));
   const commentsList = commentsContainer.children;
 
-  const showComments = addCommentsViwer(commentsList);
+  const showComments = addCommentsViwer(commentsList, commentButtonLoader, currentComments);
 
   const onCommentLoad = () => {
     showComments()
@@ -76,24 +84,30 @@ const generateModalContent = (eventIndex, data) => {
 
   const closePictureModal = () => {
     body.classList.remove('modal-open');
+    likesCount.classList.remove('likes-count--active');
     pictureModal.remove();
   }
 
-  const onLikeClick = (evt) => {
-    if (evt.target.classList.contains('likes-count--active')) {
+  const onLikeClick = () => {
+    // eslint-disable-next-line no-console
+    console.log(likesCount)
+    if (likesCount.classList.contains('likes-count--active')) {
       likesCount.textContent --
-      evt.target.classList.remove('likes-count--active');
+      likesCount.classList.remove('likes-count--active');
     } else {
       likesCount.textContent++
-      evt.target.classList.add('likes-count--active');
+      likesCount.classList.add('likes-count--active');
     }
   }
 
-  socialLikes.addEventListener('click', onLikeClick)
+
+  socialLikes.addEventListener('click', onLikeClick);
   commentButtonLoader.addEventListener('click', onCommentLoad);
 
   btnClosePictureModal.addEventListener('click', () => {
     closePictureModal();
+    commentButtonLoader.removeEventListener('click', onCommentLoad);
+    socialLikes.removeEventListener('click', onLikeClick)
   })
 
   showComments()

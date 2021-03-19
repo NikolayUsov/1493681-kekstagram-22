@@ -2,7 +2,6 @@ import { getData } from './api.js'
 import './create-picture.js'
 import { renderPictures } from './create-picture.js'
 import { activateFilter } from './filter.js'
-
 import { saveData } from './store.js'
 import './upload-photo.js'
 

@@ -1,6 +1,7 @@
 import { sendData } from './api.js';
 import {onEffectsListChange,effectValue, findCheckedEffect, resetScale} from './effects.js'
 import { showInfoMessage } from './message.js';
+import { resetPreview } from './photo-preview.js';
 import {onSliderChange, onSliderUpdate, slider} from './slider.js'
 import './validation.js'
 
@@ -26,6 +27,7 @@ const closeUploadPhoto = () => {
   body.classList.remove('modal-open');
   uploadPhotoModal.classList.add('hidden');
   uploadForm.reset();
+  resetPreview();
 }
 
 
