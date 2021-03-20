@@ -6,10 +6,10 @@ const photoPreview = document.querySelector('.img-upload__preview').querySelecto
 const scaleValue = document.querySelector('.scale__control--value');
 const scale = document.querySelector('.scale');
 const effectValue = document.querySelector('.effect-level__value');
+
 const SCALE_STEP = 25;
 const SCALE_MIN_VALUE = 25;
 const SCALE_MAX_VALUE =100;
-
 
 const onScaleClick = (evt) => {
   let  currentScaleValue = parseInt(scaleValue.value)

@@ -10,7 +10,7 @@ const activateFilter = () => {
   filterSection.classList.remove('img-filters--inactive');
 }
 
-const defoultFilter = (data) => {
+const defaultFilter = (data) => {
   return data
 }
 
@@ -28,8 +28,8 @@ const topCommentsFilter = (data) => {
 const filterData = (data, kindFilter) => {
   let filtredData;
 
-  if(kindFilter === 'filter-default') {
-    filtredData = defoultFilter(data);
+  if (kindFilter === 'filter-default') {
+    filtredData = defaultFilter(data);
   }
   else if (kindFilter === 'filter-random') {
     filtredData = randomFilter(data);

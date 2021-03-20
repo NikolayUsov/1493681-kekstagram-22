@@ -37,7 +37,7 @@ const slider = document.querySelector('.effect-level__slider');
 
 noUiSlider.create (slider, {
   start: 50,
-  step:1,
+  step: 1,
   range: {
     'min': 0,
     'max': 100,

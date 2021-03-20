@@ -6,9 +6,7 @@ import { getData } from './store.js';
 /* eslint-disable no-unused-vars */
 const body = document.querySelector('body');
 const picturesContainer =  document.querySelector('.pictures');
-const pictureModal = document.querySelector('.big-picture');
-const btnClosePictureModal = document.querySelector('.big-picture__cancel');
-const MAX_PICTURE = 12;
+
 
 const openPictureModal = () => {
   body.classList.add('modal-open');
@@ -16,10 +14,9 @@ const openPictureModal = () => {
 
 const createPictureElement = (data) => {
   const {id, url, likes,comments} = data;
-
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const pictureCard = pictureTemplate.cloneNode(true);
-  pictureCard.setAttribute('id', id)
+  pictureCard.dataset.id = id;
   pictureCard.querySelector('.picture__img').src = url;
   pictureCard.querySelector('.picture__comments').textContent = comments.length;
   pictureCard.querySelector('.picture__likes').textContent = likes;
@@ -28,10 +25,11 @@ const createPictureElement = (data) => {
 }
 
 const onPictureClick = (evt) => {
-  evt.preventDefault();
-  const id = evt.currentTarget.getAttribute('id')
+  const pictureCard = evt.target.closest('.picture');
+  if (!pictureCard) { return }
+  const idData = pictureCard.dataset.id;
   const data = getData();
-  body.appendChild(generateModalContent(id, data))
+  body.appendChild(generateModalContent(idData, data))
   openPictureModal()
 }
 
@@ -39,7 +37,6 @@ const renderPictures = (data) => {
   for (let i = 0; i < data.length; i++) {
     const picture = data[i];
     const pictureElement = createPictureElement(picture);
-    pictureElement.addEventListener('click', onPictureClick)
     picturesContainer.appendChild(pictureElement);
   }
 }
@@ -55,6 +52,5 @@ const clearPicturesContainer = () => {
   }
 }
 
-
-
+picturesContainer.addEventListener('click', onPictureClick);
 export {renderPictures, clearPicturesContainer}
