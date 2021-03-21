@@ -1,5 +1,7 @@
-/* global noUiSlider:readonly */
-import {photoPreview, findCheckedEffect,effectValue} from './effects.js'
+
+import {photoPreview, findCheckedEffect,effectValue} from './effects.js';
+import noUiSlider from 'nouislider';
+import 'nouislider/distribute/nouislider.css';
 const SliderProperties = {
   CHROME: {
     MIN:0,

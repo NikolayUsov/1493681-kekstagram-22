@@ -2,7 +2,7 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   context: path.resolve(__dirname,'source'), //указаликорневую папку
@@ -41,21 +41,14 @@ module.exports = {
         }
       ],
     }),
+    new MiniCssExtractPlugin(),
   ],
-  /*  module: {
+  module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader'],
-      },
-      {
-        test: /\.(png||svg|| jpg || jpeg)/,
-        use: ['file-loader'],
-      },
-      {
-        test: /\.(woff||woff2||ttf||eot)$/,
-        use: ['file-loader'],
+        use: [MiniCssExtractPlugin.loader,'css-loader'],
       },
     ],
-  }, */
+  },
 }
