@@ -8,6 +8,7 @@ const checkHashtag = (str) => {
   const regex = /[^\w\s]/g;
 
   let text = str.slice(1);
+
   if (str.length > MAX_HASHTAG_LENGTH) {
     return false
   }
@@ -38,19 +39,18 @@ const validateHashtags = (arr, evt) => {
     let elem = arr[i];
 
     if (arr.indexOf(elem) !== arr.lastIndexOf(elem)) {
-      evt.target.setCustomValidity('Неуникальные хештеги');
-      return false
+
+      return evt.target.setCustomValidity('Неуникальные хештеги');
 
     } else if (!checkHashtag(elem, evt)){
-      evt.target.setCustomValidity(`${elem} - этот  хештег неправильный`);
-      return false
+
+      return evt.target.setCustomValidity(`${elem} - этот  хештег неправильный`);
 
     } else {
-      evt.target.setCustomValidity('')
+      return evt.target.setCustomValidity('')
     }
   }
 
-  return true
 }
 
 const onHashtagInputChange = (evt) => {
